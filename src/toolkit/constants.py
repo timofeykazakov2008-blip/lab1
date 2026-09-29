@@ -1,4 +1,3 @@
-SAMPLE_CONSTANT: int = 10
 OPERATORS: tuple[str,...] = ('+', '-', '*', '/')
 MASSA: dict[str,float] = {
     'kg': 1000.0,

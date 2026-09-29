@@ -13,7 +13,7 @@ def token(expression: str) -> list[str]:
     tokens = []
     i = 0
     if not expression.strip():
-        raise CalculatorError("Пустое выражение")
+        raise CalculatorError('Пустое выражение.')
     while i < len(expression):
         if expression[i] == ' ':
             i+=1
@@ -27,7 +27,7 @@ def token(expression: str) -> list[str]:
                 i+=1
             tokens.append(''.join(timetokens))
         else:
-            raise CalculatorError(f"Недопустимый символ: '{expression[i]}'")
+            raise CalculatorError(f"Недопустимый символ: '{expression[i]}'.")
     return tokens
 def validate(tokens: list[str]) -> list[str | float]:
     flag = True
@@ -53,9 +53,9 @@ def validate(tokens: list[str]) -> list[str | float]:
                 itog.append(i)
                 flag = True
             else:
-                raise CalculatorError(f"Пропущен оператор перед числом '{i}'.")
+                raise CalculatorError(f"Пропущен оператор (+/-*) перед числом '{i}'.")
     if flag:
-        raise CalculatorError("Выражение не может оканчиваться оператором.")
+        raise CalculatorError('Выражение не может заканчивается оператором (+/-*).')
     return itog
 def RPN(itog: list[str | float]) -> list[str | float]:
     vvod: list[str | float] = []
@@ -86,7 +86,7 @@ def cal_RPN(vvod: list[str | float]) -> float:
                 cnt = a * b
             if i == '/':
                 if b == 0:
-                    raise CalculatorError("Деление на ноль")
+                    raise CalculatorError('Деление на ноль.')
                 cnt = a / b
             if i == '-':
                 cnt = a - b
