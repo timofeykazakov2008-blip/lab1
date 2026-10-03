@@ -10,6 +10,9 @@ PRIORITY: dict[str,int] = {
     '/': 2,
 }
 def token(expression: str) -> list[str]:
+    """Разбивает входную математическую строку на список строковых токенов. Игнорирует пробелы, группирует цифры с десятичной точкой в единые числа
+    и сохраняет операторы (+, -, *, /). Вызывает CalculatorError при пустом вводе или недопустимых символах.
+    """
     tokens = []
     i = 0
     if not expression.strip():
@@ -30,6 +33,10 @@ def token(expression: str) -> list[str]:
             raise CalculatorError(f"Недопустимый символ: '{expression[i]}'.")
     return tokens
 def validate(tokens: list[str]) -> list[str | float]:
+    """Валидатор, нужен для обработки списка вида list[str] в list[str | float], точнее валидатор разделяет операторы и
+    цифры/числа на разыне типы данных, для дальнейшей работы. Также валидатор сразу проверяет несколько условйи выражений,
+    корректность которых важна.
+    """
     flag = True
     itog: list[str | float] = []
     unar = 1.0
@@ -58,6 +65,8 @@ def validate(tokens: list[str]) -> list[str | float]:
         raise CalculatorError('Выражение не может заканчивается оператором (+/-*).')
     return itog
 def RPN(itog: list[str | float]) -> list[str | float]:
+    """Операция стек, в stack кладутся операторы по правилу приоритетов стека. Выводится все в vvod. Объясняя работу стека
+    можно сказать что числа сразу попадают в vvod, операторы попдают на вершину стека и вылетают оттуда в vvod по правилу стека"""
     vvod: list[str | float] = []
     stack: list[str] = []
     for i in itog:
@@ -72,6 +81,10 @@ def RPN(itog: list[str | float]) -> list[str | float]:
         vvod.append(stack.pop())
     return vvod
 def cal_RPN(vvod: list[str | float]) -> float:
+    """Функция где мы обрабатываем наш stack уже в финальное число, используя снова stack. Операнды помещаются в стек.
+    При встрече оператора из стека извлекаются два последних числа, над ними выполняется операция, и результат возвращается в стек.
+    Обрабатывает деление на ноль.
+    """
     stack: list[float] = []
     for i in vvod:
         if i not in OPERATORS:
@@ -93,6 +106,7 @@ def cal_RPN(vvod: list[str | float]) -> float:
             stack.append(float(cnt))
     return stack[0]
 def calculate(expression: str) -> float:
+    """Финальная функция калькулятора собирает все вышеописанные функции воедино и вызывает результат"""
     tokens = token(expression)
     itog = validate(tokens)
     vvod = RPN(itog)

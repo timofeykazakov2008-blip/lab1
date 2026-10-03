@@ -8,15 +8,18 @@ from toolkit.errors import ToolkitError
 
 
 def form_itog(val: float) -> str:
+    """Функция для избавления из числа лишних 0, например в числе 1.0 = 1"""
     if val.is_integer():
         return str(int(val))
     return str(val)
 
 def form_expression(vvod: list[str | float]) -> str:
+    """Функция для нормальнаго вывода выражений с флагом --RPN"""
     i = [form_itog(x) if isinstance(x, float) else str(x) for x in vvod]
     return " ".join(i)
 
-def Phelp():
+def Phelp() -> None:
+    """Функция вывода справки пользователю"""
     text_help = (
         'Помощь в использовании программы:\n'
         ' python -m toolkit calc [--RPN] "выражение/expression" (флаг --RPN нужен для вывода постфиксной записи выражения)\n'
@@ -26,6 +29,10 @@ def Phelp():
     sys.exit(0)
 
 def main() -> None:
+    """Основная функция работы всей програмы, пользуясь sys я разбиваю получаемое выражение от пользователя на список с индексами
+    так if sys.argv < 2 нам нужен чтоб понять, что пользователь не написали ничего после python -m. В функции рассматриваются 4 случая
+    sys.argv и 1 вспомогательный для calculator с флагом --RPN. Когда программа понимает, ныжный вариант, то делает заданные действия
+    и выводит знак завершения пргграммы 0 - успех 2 - неудача"""
     if len(sys.argv) < 2:
         sys.stderr.write('ERROR: Не указана команда. Используйте --help для справки и помощи.\n')
         sys.exit(2)

@@ -3,6 +3,7 @@ from toolkit.errors import ConverterError
 
 
 def conv_temperature(znach: float, vel1: str, vel2: str) -> float:
+    """Вспомогательная функция дял перевода температур, здесь описаны и выполненны все возможные действия с температурами"""
     if znach < ABSOLUTE_0[vel1]:
         raise ConverterError('Температура ниже абсолютного нуля.')
     elif vel1 == vel2:
@@ -23,6 +24,8 @@ def conv_temperature(znach: float, vel1: str, vel2: str) -> float:
         raise ConverterError('Недопустиая величина конвертации.')
 
 def convert(znach: float, vel1: str, vel2: str) -> float:
+    """Конвертацяи чисел, если мы переводим массу и длинну мы пользуемся данными из файла constants где у нас есть
+    базовая велична, через которую происходят все вычисления, переводя температуры мы пользумеся вспомогательной функцией"""
     vel1 = vel1.lower()
     vel2 = vel2.lower()
     if vel1 not in MASSA and vel1 not in LENGTH and vel1 not in ABSOLUTE_0:
